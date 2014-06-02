@@ -23,7 +23,7 @@ jenkins_user:
     - require:
       - group: jenkins_group
 
-jenkins:
+repo_update:
   pkgrepo.managed:
     - humanname: Jenkins upstream package repository
     {% if grains['os_family'] == 'RedHat' %}
@@ -33,11 +33,18 @@ jenkins:
     - name: deb http://pkg.jenkins-ci.org/debian binary/
     - key_url: http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key
     {% endif %}
-  pkg.latest:
+
+jenkins_pkg:
+  pkg.installed:
     - refresh: True
+    - name: jenkins
     - require:
-      - pkgrepo: jenkins
+      - pkgrepo: repo_update
+
+jenkins:
   service.running:
     - enable: True
     - watch:
       - pkg: jenkins
+    - require:
+      - pkg: jenkins_pkg
