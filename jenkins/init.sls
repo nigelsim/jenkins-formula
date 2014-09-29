@@ -55,3 +55,4 @@ jenkins:
       - file: jenkins_config
     - require:
       - pkg: jenkins_pkg
+      - file: jenkins_config
