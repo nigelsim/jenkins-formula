@@ -1,6 +1,22 @@
 include:
   - nginx
+{% if grains['os'] == 'RedHat' or grains['os'] == 'Fedora' or grains['os'] == 'CentOS'%}
+/etc/nginx/conf.d/jenkins.conf:
+  file:
+    - managed
+    - template: jinja
+    - source: salt://jenkins/files/nginx.conf
+    - user: nginx
+    - group: nginx
+    - mode: 440
+    - require:
+      - pkg: jenkins
 
+  nginx:
+    service:
+      - watch:
+        - file: /etc/nginx/conf.d/jenkins.conf
+{% else %}
 /etc/nginx/sites-available/jenkins.conf:
   file:
     - managed
@@ -23,3 +39,4 @@ extend:
     service:
       - watch:
         - file: /etc/nginx/sites-available/jenkins.conf
+{% endif %}
