@@ -1,6 +1,7 @@
 include:
   - nginx
 {% if grains['os'] == 'RedHat' or grains['os'] == 'Fedora' or grains['os'] == 'CentOS'%}
+
 /etc/nginx/conf.d/jenkins.conf:
   file:
     - managed
@@ -12,6 +13,7 @@ include:
     - require:
       - pkg: jenkins
 
+extend:
   nginx:
     service:
       - watch:
