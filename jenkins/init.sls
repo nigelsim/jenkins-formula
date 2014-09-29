@@ -28,6 +28,7 @@ jenkins_config:
     - managed
     - name: /etc/sysconfig/jenkins
     - source: salt://jenkins/files/jenkins.conf.tmpl
+    - template: jinja
 
 repo_update:
   pkgrepo.managed:
