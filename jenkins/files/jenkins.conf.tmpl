@@ -1,5 +1,6 @@
 {% set jenkins = pillar.get('jenkins', {}) -%}
 {% set home = jenkins.get('home', '/usr/local/jenkins') -%}
+{% set port = jenkins.get('port', '80') -%}
 {% set user = jenkins.get('user', 'jenkins') -%}
 {% set group = jenkins.get('group', user) -%}
 ## Path:        Development/Jenkins
