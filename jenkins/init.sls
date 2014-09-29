@@ -23,6 +23,12 @@ jenkins_user:
     - require:
       - group: jenkins_group
 
+jenkins_config:
+  file:
+    - managed
+    - name: /etc/sysconfig/jenkins
+    - source: salt://jenkins/files/jenkins.conf.tmpl
+
 repo_update:
   pkgrepo.managed:
     - humanname: Jenkins upstream package repository
@@ -46,5 +52,6 @@ jenkins:
     - enable: True
     - watch:
       - pkg: jenkins
+      - file: jenkins_config
     - require:
       - pkg: jenkins_pkg
